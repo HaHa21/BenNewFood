@@ -1,0 +1,16 @@
+ [
+    {
+      "id": 1,
+      "title": "Americano",
+      "description": "Americano",
+      "image": "/images/americanespresso.jpg",
+      "price": 2
+    },
+    {
+      "id": 2,
+      "title": "Chicken Teriyaki",
+      "description": "Chicken with sesame seed",
+      "image": "/images/chicken_teriyaki.jpg",
+      "price": 4
+    }
+  ]

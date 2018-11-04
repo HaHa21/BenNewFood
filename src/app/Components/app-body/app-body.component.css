@@ -1,0 +1,13 @@
+﻿@media(min-width: 768px) {
+  .img-size {
+    height: 800px;
+    width: 1050px;
+  }
+}
+
+@media(min-width: 1024px) and (max-width: 1096px){
+  .img-size{
+     height: 405px;
+     width: 1280px;
+  }
+}
