@@ -1,0 +1,116 @@
+﻿@media(min-width: 600px) {
+  .signinpos {
+    position: absolute;
+    bottom: 0;
+    right: 5%;
+  }
+
+  .signuppos {
+    position: absolute;
+    top: 4%;
+    right: 5%;
+  }
+
+  .fastfoodlogo {
+    display: block;
+    margin-left: 320px;
+    margin-right: auto;
+  }
+
+  .dropdownimg{
+    position: relative;
+    top: 60px;
+  }
+
+  .titleheader{
+    margin-left: 18%;
+  }
+
+  span{
+    margin-left: 25%;
+  }
+
+  .toolbar-height{
+    height: 150px;
+  }
+
+  .top-image-margin{
+    margin-top: 75px;
+  }
+}
+
+@media(min-width: 1200px){
+  .fastfoodlogo {
+    display: block;
+    margin-left: 420px;
+    margin-right: auto;
+  }
+
+  span{
+    margin-left: 25%;
+  }
+
+  .toolbar-height{
+    height: 150px;
+  }
+}
+
+@media(min-width: 1500px) {
+  .fastfoodlogo {
+    display: block;
+    margin-left: 800px;
+    margin-right: auto;
+  }
+
+  .toolbar-height{
+    height: 150px;
+  }
+}
+
+@media(min-width: 2000px) and (max-width: 2200px) {
+  .fastfoodlogo {
+    display: block;
+    margin-left: 885px;
+    margin-right: auto;
+  }
+
+  span{
+    margin-left: 42%;
+  }
+
+  .toolbar-height{
+    height: 150px;
+  }
+}
+
+@media(min-width: 2300px) and (max-width: 2499px){
+  .fastfoodlogo {
+    display: block;
+    margin-left: 1012px;
+    margin-right: auto;
+  }
+
+  span{
+    margin-left: 42%;
+  }
+
+  .toolbar-height{
+    height: auto;
+  }
+}
+
+@media(min-width: 2500px) and (max-width: 2800px){
+  .fastfoodlogo {
+    display: block;
+    margin-left: 1032px;
+    margin-right: auto;
+  }
+
+  span{
+    margin-left: 25%;
+  }
+
+  .toolbar-height{
+    height: auto;
+  }
+}
