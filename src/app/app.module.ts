@@ -11,12 +11,14 @@ import { AppFooterComponent } from './Components/app-footer/app-footer.component
 import { AppBodyComponent } from './Components/app-body/app-body.component';
 import { AboutUsComponent } from './Mainpages/about-us/about-us.component';
 import { routing } from './app-routing.module';
-import { MessageModule } from './Mainpages/messages/message.module';
+import { MessageComponent } from './Mainpages/messages/message.component';
+import { MessageListComponent } from './Mainpages/messages/message-list.component';
 import { HomeComponent } from './Mainpages/home/home.component';
 import { PromotionComponent } from './Mainpages/promotions/promotions.component';
 import { PostBannerComponent } from './Mainpages/post/post-banner.component';
 import { PostService } from './Mainpages/post/post.service';
 import { AuthService } from './Mainpages/auth/auth.service';
+import { MessageService } from './Mainpages/messages/message.service';
 import { HealthComponent } from './Mainpages/health/health.component';
 import { PostComponent } from './Mainpages/post/post.directive';
 import { ErrorComponent } from './Components/errors/error.component';
@@ -37,7 +39,9 @@ import { ErrorInterceptor } from "./Components/errors/error-interceptor";
     HealthComponent,
     PostComponent,
     PostBannerComponent,
-    ErrorComponent
+    ErrorComponent,
+    MessageComponent,
+    MessageListComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,6 @@ import { ErrorInterceptor } from "./Components/errors/error-interceptor";
     routing,
     ReactiveFormsModule,
     HttpClientModule,
-    MessageModule,
     DemoMaterialModule,
     NgxPaginationModule
 
@@ -58,7 +61,7 @@ import { ErrorInterceptor } from "./Components/errors/error-interceptor";
   ],
   providers: [
       PostService,
-
+      MessageService,
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
 
