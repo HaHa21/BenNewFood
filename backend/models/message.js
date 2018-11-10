@@ -4,8 +4,9 @@ var Schema = mongoose.Schema;
 var User = require('./user');
 
 var schema = new Schema({
+    title: {type: String, required: true},
     content: {type: String, required: true},
-    user: {type: Schema.Types.ObjectId, ref: 'User'}
+    creator: {type: Schema.Types.ObjectId, ref: 'User', required: true}
 });
 
-module.exports = mongoose.model('Message', schema);
+module.exports = mongoose.model('MessageContent', schema);

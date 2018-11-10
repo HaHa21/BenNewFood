@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/message', messageRoutes);
+app.use('/messages', messageRoutes);
 app.use('/user', userRoutes);
 app.use('/', appRoutes);
 
