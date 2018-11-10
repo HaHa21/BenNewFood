@@ -9,8 +9,9 @@ const MessageContent = require('../models/message');
 
 router.post("", CheckAuth, (req, res, next) => {
 
-  const message = new MessageContent({
-      title: req.body.title,
+
+  const message = new Message({
+    title: req.body.title,
     content: req.body.content,
     creator: req.userData.userId
   });
@@ -55,18 +56,15 @@ router.put(
       } else {
         res.status(401).json({ message: "Not authorized!" });
       }
-    })
-    .catch(error => {
-      res.status(500).json({
-        message: "Couldn't udpate post!"
-      });
-    });
+
 });
 
 router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const postQuery = MessageContent.find();
+
+  const postQuery = Message.find();
+
   let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -74,32 +72,56 @@ router.get("", (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-      return MessageContent.countDocuments();
+
+      return Message.count();
     })
     .then(count => {
       res.status(200).json({
-        message: "Messages fetched successfully!",
+        message: "Posts fetched successfully!",
         posts: fetchedPosts,
         maxPosts: count
       });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching posts failed!"
+      });
+
     });
 });
 
 router.get("/:id", (req, res, next) => {
-  MessageContent.findById(req.params.id).then(post => {
-    if (post) {
-      res.status(200).json(post);
-    } else {
-      res.status(404).json({ message: "Message not found!" });
-    }
-  });
+
+  Message.findById(req.params.id)
+    .then(post => {
+      if (post) {
+        res.status(200).json(post);
+      } else {
+        res.status(404).json({ message: "Post not found!" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching post failed!"
+      });
+    });
 });
 
 router.delete("/:id", CheckAuth, (req, res, next) => {
-  MessageContent.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "Message deleted!" });
-  });
+  Message.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+    .then(result => {
+      console.log(result);
+      if (result.n > 0) {
+        res.status(200).json({ message: "Deletion successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Deleting posts failed!"
+      });
+    });
 });
 
 module.exports = router;
