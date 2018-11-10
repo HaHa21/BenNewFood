@@ -4,8 +4,9 @@ var Schema = mongoose.Schema;
 var User = require('./user');
 
 var schema = new Schema({
-    content: {type: String, required: true},
-    user: {type: Schema.Types.ObjectId, ref: 'User'}
+    title: { type: String, required: [true, 'title cant be blank'] },
+    content: {type: String, required: [true, 'content cant be blank'] },
+    creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });
 
-module.exports = mongoose.model('Message', schema);
+module.exports = mongoose.model('MessageContent', schema);
