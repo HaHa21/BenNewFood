@@ -17,9 +17,11 @@
 
       <span class="justify-content-center top-image-margin"><a href="/home"><img src="../../assets/images/Benlogo.png" /></a></span>
 
-
       <mat-toolbar-row>
-      <button mat-button [routerLink] = "['/messages']" class="nav-link" *ngIf = "userIsAuthenticated"><h2>Messenger</h2></button>
+      <button mat-button routerLink = "/messagelist" class="nav-link" ><h2>MessageList</h2></button>
+    </mat-toolbar-row>
+      <mat-toolbar-row>
+      <button mat-button routerLink = "/create" class="nav-link" *ngIf = "userIsAuthenticated"><h2>Messenger</h2></button>
     </mat-toolbar-row>
       <mat-toolbar-row>
       <button mat-button routerLink = "/auth" class="nav-link "><h2>Authentication</h2></button>

@@ -14,6 +14,8 @@ import { ErrorService } from "../../Components/errors/error.service";
 export class AuthService {
     private isAuthenticated = false;
     private token : string;
+    private userId: string;
+    
     private authStatusListener = new Subject<boolean>();
     private userStatusListener = new Subject<boolean>();
 
@@ -32,6 +34,10 @@ export class AuthService {
 
     getisAuth(){
       return this.isAuthenticated;
+    }
+
+    getUserId() {
+      return this.userId;
     }
 
     getAuthStatusListener(){
