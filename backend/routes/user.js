@@ -23,7 +23,7 @@ router.post('/signup', function (req, res, next) {
                   });
               } else {
     var user = new User({
-          _id: new mongoose.Types.ObjectId(),
+
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: hash,
@@ -66,7 +66,6 @@ router.post('/admin-signup', function (req, res, next) {
                   })
               } else {
     var user = new User({
-          _id: new mongoose.Types.ObjectId(),
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: hash,
@@ -116,7 +115,8 @@ router.post('/signin', (req, res, next) => {
     "Secret_be_longer");
 
     res.status(200).json({
-      token : token
+      token : token,
+      userId: fetchedUser._id
     })
   }).catch(err => {
     return res.status(401).json({
