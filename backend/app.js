@@ -15,6 +15,10 @@ var app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+// Create link to Angular build directory
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 mongoose.connect('mongodb://localhost:27017/BenFastFood').then(() => {
   console.log("connected to db!");
 }).catch(() => {
