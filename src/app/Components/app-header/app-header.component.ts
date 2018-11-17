@@ -9,6 +9,7 @@ import { AuthService } from '../../Mainpages/auth/auth.service';
   styleUrls: ['./app-header.component.css']
 })
 export class AppHeaderComponent implements OnInit, OnDestroy{
+    role;
    @Input() appheader: AppHeader;
    private authListenerSubs : Subscription;
    userIsAuthenticated = false;
@@ -19,6 +20,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy{
    }
 
    ngOnInit(){
+      this.role = localStorage.getItem('role');
       this.userIsAuthenticated = this.authService.getisAuth();
       this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated =>  {
         this.userIsAuthenticated = isAuthenticated;

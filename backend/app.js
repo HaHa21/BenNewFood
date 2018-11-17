@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-const config = require('./config/dev');
+
 var appRoutes = require('./routes/app');
 var userRoutes = require('./routes/user');
 var messageRoutes = require('./routes/messages');
@@ -15,9 +15,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-
-
-mongoose.connect(config.DB_URI, { useNewUrlParser: true }).then(() => {
+mongoose.connect("mongodb://Tom:Tom123@ds155653.mlab.com:55653/benfood", { useNewUrlParser: true }).then(() => {
   console.log("connected to db!");
 }).catch(() => {
   console.log("con failed!");
