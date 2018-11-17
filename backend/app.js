@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+const config = require('./config/dev');
 var appRoutes = require('./routes/app');
 var userRoutes = require('./routes/user');
 var messageRoutes = require('./routes/messages');
@@ -15,11 +15,9 @@ var app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-// Create link to Angular build directory
-var distDir = __dirname + "/dist/";
-app.use(express.static(distDir));
 
-mongoose.connect('mongodb://localhost:27017/BenFastFood').then(() => {
+
+mongoose.connect(config.DB_URI, { useNewUrlParser: true }).then(() => {
   console.log("connected to db!");
 }).catch(() => {
   console.log("con failed!");
@@ -34,9 +32,19 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/messages', messageRoutes);
-app.use('/user', userRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/user', userRoutes);
 app.use('/', appRoutes);
+
+if(process.env.NODE_ENV === 'production'){
+  const appPath = path.join(__dirname, '..', 'dist');
+
+  app.use(express.static(appPath));
+
+  app.get('*', function(req, res) {
+    res.sendFile(path.resolve(appPath, 'index.html'));
+  });
+}
 
 app.use((req,res,next) => {
     const error = new Error("Not Found");
