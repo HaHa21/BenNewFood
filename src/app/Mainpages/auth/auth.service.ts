@@ -14,6 +14,8 @@ import { ErrorService } from "../../Components/errors/error.service";
 export class AuthService {
     private isAuthenticated = false;
     private token : string;
+    private userId: string;
+
     private authStatusListener = new Subject<boolean>();
     private userStatusListener = new Subject<boolean>();
 
@@ -34,6 +36,10 @@ export class AuthService {
       return this.isAuthenticated;
     }
 
+    getUserId() {
+      return this.userId;
+    }
+
     getAuthStatusListener(){
       return this.authStatusListener.asObservable();
     }
@@ -44,7 +50,7 @@ export class AuthService {
 
     signup(email: string, password: string){
       const authData: AuthData = { email: email, password: password};
-         return this.http.post('http://localhost:3000/user/signup', authData)
+         return this.http.post('https://benfood.herokuapp.com/api/user/signup', authData)
             .subscribe(() => {
         this.router.navigate(["/"]);
       }, error => {
@@ -55,7 +61,7 @@ export class AuthService {
 
     signin(email : string, password : string) {
       const authData: AuthData = {email: email, password: password}
-      return this.http.post<{ token : string }>('http://localhost:3000/user/signin', authData)
+      return this.http.post<{ token : string }>('https://benfood.herokuapp.com/api/user/signin', authData)
           .subscribe(response => {
             const token = response.token;
 

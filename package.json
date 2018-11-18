@@ -5,12 +5,13 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run start --prefix backend",
+    "start-dev": "ng serve --proxy-config proxy.conf.json",
+    "build": "ng build --prod",
+    "heroku-postbuild": "npm run build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "start:server": "nodemon server.js"
+    "e2e": "ng e2e"  
   },
   "dependencies": {
     "@angular-devkit/build-angular": "^0.10.4",
