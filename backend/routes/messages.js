@@ -89,4 +89,25 @@ router.delete("/:id", CheckAuth, (req, res, next) => {
       });
     });
 });
+
+router.put(
+  "/:id",
+  CheckAuth, (req, res, next) => {
+    const message = new MessageContent({
+      _id : req.body.id,
+        title: req.body.title,
+      content : req.body.content,
+      creator: req.userData.userId
+    });
+
+    MessageContent.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+    .then(result => {
+      if (result.nModified > 0) {
+        res.status(200).json({ message: "Update successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+  })
+});
+
 module.exports = router;
