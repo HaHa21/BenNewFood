@@ -4,62 +4,36 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 
 const CheckAuth = require("../middleware/CheckAuth");
-
-const MessageContent = require('../models/message');
+var User = require('../models/user');
+var Message = require('../models/message');
 
 router.post("", CheckAuth, (req, res, next) => {
-
 
   const message = new Message({
     title: req.body.title,
     content: req.body.content,
     creator: req.userData.userId
-  });
-
+  })
 
   message.save().then(createdPost => {
-
-    return res.status(201).json({
-      message: "Message added successfully"
-    });
-
-
+    res.status(201).json(
+      {
+        message: "Message added Successfully"
       }
-    ).catch(error => {
-      console.log(error);
-        return res.status(500).json({
-          message: "Creating a message failed!"
-        });
-      });
-  });
-
-
-router.put(
-  "/:id",
-  CheckAuth, (req, res, next) => {
-    const message = new MessageContent({
-      _id : req.body.id,
-        title: req.body.title,
-      content : req.body.content,
-      creator: req.userData.userId
-    });
-
-    MessageContent.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
-    .then(result => {
-      if (result.nModified > 0) {
-        res.status(200).json({ message: "Update successful!" });
-      } else {
-        res.status(401).json({ message: "Not authorized!" });
+    );
+  }).catch(error => {
+    res.status(500).json(
+      {
+        message: "Creating a message failed! "
       }
-
+    )
+  })
 });
 
 router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-
   const postQuery = Message.find();
-
   let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -67,7 +41,6 @@ router.get("", (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-
       return Message.count();
     })
     .then(count => {
@@ -81,12 +54,10 @@ router.get("", (req, res, next) => {
       res.status(500).json({
         message: "Fetching posts failed!"
       });
-
     });
 });
 
 router.get("/:id", (req, res, next) => {
-
   Message.findById(req.params.id)
     .then(post => {
       if (post) {
@@ -119,8 +90,24 @@ router.delete("/:id", CheckAuth, (req, res, next) => {
     });
 });
 
+router.put(
+  "/:id",
+  CheckAuth, (req, res, next) => {
+    const message = new MessageContent({
+      _id : req.body.id,
+        title: req.body.title,
+      content : req.body.content,
+      creator: req.userData.userId
+    });
 
-
-
+    MessageContent.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+    .then(result => {
+      if (result.nModified > 0) {
+        res.status(200).json({ message: "Update successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+  })
+});
 
 module.exports = router;
