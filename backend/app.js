@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var appRoutes = require('./routes/app');
 var userRoutes = require('./routes/user');
 var messageRoutes = require('./routes/messages');
 
@@ -32,7 +31,7 @@ app.use(function (req, res, next) {
 
 app.use('/api/messages', messageRoutes);
 app.use('/api/user', userRoutes);
-app.use('/', appRoutes);
+
 
 if(process.env.NODE_ENV === 'production'){
   const appPath = path.join(__dirname, '..', 'dist');
