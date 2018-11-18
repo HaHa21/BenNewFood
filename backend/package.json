@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: not test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js"
 
   },
   "dependencies": {
