@@ -20,12 +20,7 @@ router.post("", CheckAuth, (req, res, next) => {
   message.save().then(createdPost => {
 
     return res.status(201).json({
-      message: "Message added successfully",
-      post: {
-          ...createdPost,
-          id: createdPost._id
-      }
-
+      message: "Message added successfully"
     });
 
 
