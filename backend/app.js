@@ -20,15 +20,6 @@ mongoose.connect("mongodb://Tom:Tom123@ds155653.mlab.com:55653/benfood", { useNe
   console.log("con failed!");
 });
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Request-Headers, Access-Control-Allow-Headers');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, HEAD, OPTIONS, PUT');
-
-    next();
-});
-
 app.use('/api/messages', messageRoutes);
 app.use('/api/user', userRoutes);
 
