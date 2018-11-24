@@ -9,15 +9,18 @@ import { AuthService } from "../auth/auth.service";
    selector: 'app-message-list',
    template: `
    <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-accordion multi="true" class="panel-hw" *ngIf="posts.length > 0 && !isLoading">
+<mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
 
-  <mat-expansion-panel *ngFor="let post of posts" class="panel-hw">
-  <mat-expansion-panel-header>
-         {{ post.title }}
+<mat-expansion-panel *ngFor="let post of posts" >
+<h2>{{ post.title }}</h2>
+  <mat-expansion-panel-header class="post-bold">
+
+        <mat-panel-description> {{ post.content }} </mat-panel-description>
+
     </mat-expansion-panel-header>
-  <p>{{ post.content }}</p>
-  <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
-    <a mat-button color="primary" routerLink="['/edit', post.id]">EDIT</a>
+
+  <mat-action-row *ngIf="userIsAuthenticated">
+    <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
     <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
   </mat-action-row>
 </mat-expansion-panel>

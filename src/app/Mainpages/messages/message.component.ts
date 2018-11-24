@@ -77,6 +77,7 @@ export class MessageComponent implements OnInit, OnDestroy{
          this.form.value.title,
          this.form.value.content,
          this.postId
+
        );
      } else {
        this.messageService.updateMessage(
