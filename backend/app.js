@@ -34,7 +34,7 @@ app.use('/api/user', userRoutes);
 
 
 if(process.env.NODE_ENV === 'production'){
-  const appPath = path.join(__dirname, '..', 'dist');
+  const appPath = path.join(__dirname, 'dist');
 
   app.use(express.static(appPath));
 
