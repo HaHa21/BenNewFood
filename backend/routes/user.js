@@ -111,13 +111,13 @@ router.post('/signin', (req, res, next) => {
         message: "Auth failed"
       });
     }
-    const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id, role: fetchedUser.role},
+    const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id},
     "Secret_be_longer");
 
     res.status(200).json({
       token : token,
       userId: fetchedUser._id
-    })
+    });
   }).catch(err => {
     return res.status(401).json({
        message : "Auth failed"

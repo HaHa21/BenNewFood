@@ -1,5 +1,5 @@
 ﻿import { Injectable } from "@angular/core";
-
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
@@ -14,11 +14,12 @@ import { ErrorService } from "../../Components/errors/error.service";
 export class AuthService {
     private isAuthenticated = false;
     private token : string;
+    private role : string;
     private userId: string;
-
     private authStatusListener = new Subject<boolean>();
     private userStatusListener = new Subject<boolean>();
 
+    private helper = new JwtHelperService();
 
     constructor(private http: HttpClient, private router : Router) {
 
@@ -38,6 +39,10 @@ export class AuthService {
 
     getUserId() {
       return this.userId;
+    }
+
+    getRole(){
+      return this.role;
     }
 
     getAuthStatusListener(){
@@ -61,19 +66,25 @@ export class AuthService {
 
     signin(email : string, password : string) {
       const authData: AuthData = {email: email, password: password}
-      return this.http.post<{ token : string }>('https://benfood.herokuapp.com/api/user/signin', authData)
+      return this.http.post<{ role : string, token : string, userId: string}>('https://benfood.herokuapp.com/api/user/signin', authData)
           .subscribe(response => {
             const token = response.token;
+            //const role = response.role;
 
             this.token = token;
 
+
             if(token){
               this.isAuthenticated = true;
+              this.userId = response.userId;
+              console.log(response);
 
               this.authStatusListener.next(true);
-
-              localStorage.setItem('role', response['role']);
+    const decodedToken = this.helper.decodeToken(token);
+              localStorage.setItem('role', decodedToken['role']);
               localStorage.setItem('token', response['token']);
+              localStorage.setItem("userId", this.userId);
+
 
               this.router.navigate(['/']);
             }
