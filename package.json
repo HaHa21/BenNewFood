@@ -6,9 +6,9 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run start --prefix backend",
-     "start-dev": "ng serve --proxy-config proxy.conf.json",
-     "build": "ng build --prod",
-     "heroku-postbuild": "npm run build",
+    "start-dev": "ng serve --proxy-config proxy.conf.json",
+    "build": "ng build --prod",
+    "heroku-postbuild": "npm run build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -27,6 +27,7 @@
     "@angular/platform-server": "^6.0.6",
     "@angular/router": "^6.0.6",
     "@angular/upgrade": "^6.0.6",
+    "@auth0/angular-jwt": "^2.0.0",
     "@types/core-js": "^2.5.0",
     "angular-4-data-table": "^0.4.6",
     "angular-in-memory-web-api": "^0.6.0",
