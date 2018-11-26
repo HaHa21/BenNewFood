@@ -85,7 +85,8 @@ export class AuthService {
               localStorage.setItem('token', response['token']);
               localStorage.setItem("userId", this.userId);
 
-
+              this.role = localStorage.getItem('role');
+              console.log(this.role);
               this.router.navigate(['/']);
             }
           }, error => {});
