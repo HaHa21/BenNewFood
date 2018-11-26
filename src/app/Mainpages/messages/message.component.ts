@@ -8,8 +8,8 @@ import { AuthService } from "../auth/auth.service";
 
 @Component({
    selector: 'app-message-component',
-   templateUrl: './message.component.html'
-
+   templateUrl: './message.component.html',
+   styleUrls: ['./messages.component.css']
 })
 
 export class MessageComponent implements OnInit, OnDestroy{

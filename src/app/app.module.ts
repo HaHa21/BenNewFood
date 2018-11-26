@@ -11,6 +11,7 @@ import { AppFooterComponent } from './Components/app-footer/app-footer.component
 import { AppBodyComponent } from './Components/app-body/app-body.component';
 import { AboutUsComponent } from './Mainpages/about-us/about-us.component';
 import { routing } from './app-routing.module';
+import { JwtModule } from '@auth0/angular-jwt';
 import { MessageComponent } from './Mainpages/messages/message.component';
 import { MessageListComponent } from './Mainpages/messages/message-list.component';
 import { HomeComponent } from './Mainpages/home/home.component';
@@ -52,6 +53,7 @@ import { ErrorInterceptor } from "./Components/errors/error-interceptor";
     HttpClientModule,
     DemoMaterialModule,
     NgxPaginationModule
+
 
   ],
 

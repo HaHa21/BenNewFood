@@ -26,10 +26,10 @@ export class SigninComponent {
 
     ngOnInit() {
         this.userForm = new FormGroup({
-            email: new FormControl(null, [
-                Validators.required,
-                Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-            ]),
+            email: new FormControl(null,
+                Validators.required
+
+            ),
             password: new FormControl(null, Validators.required)
         });
     }

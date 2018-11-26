@@ -19,7 +19,10 @@ import { AuthService } from "../auth/auth.service";
 
     </mat-expansion-panel-header>
 
-  <mat-action-row *ngIf="userIsAuthenticated">
+  <mat-action-row>
+  <a mat-button *ngIf="role === 'Admin' ">Delete By Admin</a>
+  </mat-action-row>
+  <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator ">
     <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
     <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
   </mat-action-row>
@@ -40,6 +43,7 @@ export class MessageListComponent implements OnInit, OnDestroy{
   pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
   userId: string;
+  role: string;
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
@@ -51,6 +55,7 @@ export class MessageListComponent implements OnInit, OnDestroy{
      this.isLoading = true;
   this.messageService.getMessages(this.postsPerPage, this.currentPage);
   this.userId = this.authService.getUserId();
+  this.role = this.authService.getRole();
   this.postsSub = this.messageService
     .getMessageUpdateListener()
     .subscribe((postData: { posts: Message[]; postCount: number }) => {
@@ -64,6 +69,7 @@ export class MessageListComponent implements OnInit, OnDestroy{
     .subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
+      this.role = this.authService.getRole();
     });
    }
 
