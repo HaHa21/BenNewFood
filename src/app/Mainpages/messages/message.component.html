@@ -1,14 +1,34 @@
-<mat-card>
+<mat-card class="card-padding">
+  <mat-card-content class="card-content">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form [formGroup]="form" (submit)="onSavePost()" *ngIf="!isLoading">
-    <mat-form-field>
-        <input matInput type="text" formControlName="title" placeholder="Post Title">
-        <mat-error *ngIf="form.get('title').invalid">Please enter a post title.</mat-error>
-      </mat-form-field>
-<mat-form-field>
-    <textarea matInput rows="4" formControlName="content" placeholder="Message Content"></textarea>
-    <mat-error *ngIf="form.get('content').invalid">Please enter a post content.</mat-error>
+  <form [formGroup]="form" (submit)="onSavePost()" *ngIf="!isLoading" class="form-full-width">
+    <table cellspacing="0" class="example-container">
+
+       <tr >
+         <td>
+    <mat-form-field class="table-full-width" >
+      
+        <input matInput type="text" formControlName="title" placeholder="Message Title" >
+        <mat-error *ngIf="form.get('title').invalid">Please enter a message title.</mat-error>
+    </mat-form-field>
+  </td>
+  </tr>
+
+
+         <tr >
+           <td>
+               <mat-form-field class="table-full-width" >
+
+    <textarea matInput rows="4" formControlName="content" placeholder="Message Content" class="inputtitle"></textarea>
+    <mat-error *ngIf="form.get('content').invalid">Please enter a message content.</mat-error>
   </mat-form-field>
-  <button mat-raised-button color="accent" type="submit">Save Post</button>
+  </td>
+  </tr>
+
+    </table>
 </form>
+</mat-card-content>
+<mat-card-actions>
+<button mat-raised-button color="accent" type="submit">Save Post</button>
+</mat-card-actions>
 </mat-card>

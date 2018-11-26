@@ -1,0 +1,59 @@
+
+.card-padding{
+  padding: 5%;
+}
+
+.form-full-width{
+  min-width: 150px;
+   max-width: 500px;
+   width:100%;
+}
+
+.table-full-width{
+  width: 800px;
+  padding: 3px;
+}
+
+.card-content{
+  font-size: 16pt;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px){
+
+  .card-padding{
+    padding: 5%;
+  }
+
+  .form-full-width{
+    min-width: 150px;
+     max-width: 500px;
+     width:100%;
+  }
+
+  .table-full-width{
+    width: 380px;
+    padding: 3px;
+  }
+
+  .card-content{
+    font-size: 16pt;
+  }
+
+  .example-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .example-container > * {
+    width: 100%;
+  }
+}
