@@ -1,19 +1,13 @@
 ﻿
 <mat-toolbar color="primary" class="toolbar-height">
+
+
+
+
 <mat-toolbar-row>
-
-<img src="../../assets/images/menu.jpg" class="dropdown-toggle img-fluid " data-toggle="dropdown" />
-
-
-<div class="dropdown-menu dropdownimg" >
-      <a class="dropdown-item" href="#">{{appheader.foodlink}}</a>
-      <a class="dropdown-item" href="#">{{appheader.drinklink}}</a>
-      <a class="dropdown-item" href="/aboutus">{{appheader.aboutus}}</a>
- </div>
-
-
-
-
+  <button mat-icon-button (click)="sidenav.toggle()" color="primary">
+     <mat-icon>menu</mat-icon>
+   </button>
 
       <span class="justify-content-center top-image-margin"><a href="/home"><img src="../../assets/images/Benlogo.png" /></a></span>
 

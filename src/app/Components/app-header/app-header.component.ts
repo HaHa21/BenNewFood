@@ -1,20 +1,19 @@
-﻿import { Component, Input , OnInit, OnDestroy } from '@angular/core';
+﻿import { Component, Input , OnInit, OnDestroy, Output, EventEmitter  } from '@angular/core';
 import { Subscription } from "rxjs";
-import { AppHeader } from './app-header.model';
 import { AuthService } from '../../Mainpages/auth/auth.service';
 
 @Component({
-  selector: 'app-app-header',
+  selector: 'app-header',
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.css']
 })
 export class AppHeaderComponent implements OnInit, OnDestroy{
     role;
-   @Input() appheader: AppHeader;
+
    private authListenerSubs : Subscription;
    userIsAuthenticated = false;
 
-
+@Output() toggleSidenav = new EventEmitter<void>();
    constructor(private authService: AuthService) {
 
    }

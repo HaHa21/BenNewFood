@@ -37,6 +37,22 @@
   .top-image-margin{
     margin-top: 75px;
   }
+
+  .sidenav-toggle {
+    display: none;
+    padding: 0;
+    margin: 8px;
+    min-width: 56px;
+  }
+
+
+    .mat-icon {
+      font-size: 30px;
+      height:56px;
+      width: 56px;
+      line-height: 56px;
+      color: white;
+    }
 }
 
 @media(min-width: 1200px){
@@ -81,6 +97,8 @@
   .toolbar-height{
     height: 150px;
   }
+
+  
 }
 
 @media(min-width: 2300px) and (max-width: 2499px){
