@@ -21,6 +21,7 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatSidenavModule,
   MatNativeDateModule,
   MatPaginatorModule,
   MatProgressBarModule,
@@ -28,7 +29,6 @@ import {
   MatRadioModule,
   MatRippleModule,
   MatSelectModule,
-  MatSidenavModule,
   MatSliderModule,
   MatSlideToggleModule,
   MatSnackBarModule,
@@ -80,8 +80,12 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatSidenavModule,
     MatTreeModule,
     ScrollingModule,
+  ],
+  imports: [
+    MatSidenavModule
   ]
 })
 export class DemoMaterialModule {}
