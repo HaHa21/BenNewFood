@@ -31,7 +31,7 @@
   }
 
   .toolbar-height{
-    height: 150px;
+    height: 300px;
   }
 
   .top-image-margin{
@@ -42,7 +42,7 @@
     display: none;
     padding: 0;
     margin: 8px;
-    min-width: 56px;
+    min-width: 66px;
   }
 
 
@@ -69,6 +69,50 @@
   .toolbar-height{
     height: 150px;
   }
+
+  .sidenav-toggle {
+    display: none;
+    padding: 0;
+    margin: 8px;
+    min-width: 66px;
+  }
+
+
+    .mat-icon {
+      font-size: 30px;
+      height:56px;
+      width: 56px;
+      line-height: 56px;
+      color: white;
+    }
+
+    .app-sidenav-container {
+  flex: 1;
+  position: sticky;
+  width: 100%;
+  min-width: 100%;
+  min-height: 500px;
+  margin-top: -10px;
+}
+
+.app-sidenav-content {
+
+  display: flex;
+  flex-direction: column;
+  min-height: 800px;
+}
+
+.app-sidenav {
+  width: 280px;
+}
+
+.wrapper {
+  margin-top: 180px;
+  position: sticky;
+  min-width: 100%;
+}
+
+
 }
 
 @media(min-width: 1500px) {
@@ -79,8 +123,31 @@
   }
 
   .toolbar-height{
-    height: 150px;
+    position: fixed;
+    top: 10px;
+    min-height: 150px;
   }
+
+  .top-image-margin{
+    margin-top: 85px;
+  }
+
+  .margin-row{
+    margin-left: 5px;
+  }
+
+  .nav-link{
+    margin-left: 50px;
+  }
+
+  .app-sidenav-container {
+flex: 1;
+position: sticky;
+width: 100%;
+min-width: 100%;
+min-height: 500px;
+margin-top: -10px;
+}
 }
 
 @media(min-width: 2000px) and (max-width: 2200px) {
@@ -98,7 +165,30 @@
     height: 150px;
   }
 
-  
+  .app-sidenav-container {
+flex: 1;
+position: fixed;
+width: 100%;
+min-width: 100%;
+height: 100%;
+min-height: 100%;
+}
+
+.app-sidenav-content {
+display: flex;
+height: 100%;
+flex-direction: column;
+}
+
+.app-sidenav {
+width: 240px;
+}
+
+.wrapper {
+margin-top: 10px;
+position: sticky;
+
+}
 }
 
 @media(min-width: 2300px) and (max-width: 2499px){
@@ -115,6 +205,28 @@
   .toolbar-height{
     height: auto;
   }
+
+  .app-sidenav-container {
+flex: 1;
+
+width: 100%;
+min-width: 100%;
+height: 100%;
+min-height: 100%;
+margin-top: 10px;
+}
+
+.app-sidenav-content {
+display: flex;
+height: 100%;
+flex-direction: column;
+}
+
+.app-sidenav {
+width: 240px;
+}
+
+
 }
 
 @media(min-width: 2500px) and (max-width: 2800px){
@@ -131,4 +243,40 @@
   .toolbar-height{
     height: auto;
   }
+
+  .app-sidenav-container {
+flex: 1;
+
+width: 100%;
+min-width: 100%;
+height: 100%;
+min-height: 100%;
+position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+
+
+.app-sidenav {
+width: 240px;
+}
+
+.wrapper {
+margin: 50px;
+}
+
+.top-image-margin{
+  margin-top: 85px;
+}
+
+.margin-row{
+  margin-left: 5px;
+}
+
+.nav-link{
+  margin-left: 50px;
+}
 }

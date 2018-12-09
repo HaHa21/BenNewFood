@@ -1,31 +1,54 @@
 ﻿
+
+<mat-sidenav-container class="app-sidenav-container">
+
+
+
 <mat-toolbar color="primary" class="toolbar-height">
 
 
 
 
-<mat-toolbar-row>
+<mat-toolbar-row class="margin-row">
   <button mat-icon-button (click)="sidenav.toggle()" color="primary">
      <mat-icon>menu</mat-icon>
    </button>
 
       <span class="justify-content-center top-image-margin"><a href="/home"><img src="../../assets/images/Benlogo.png" /></a></span>
 
-      <mat-toolbar-row>
+
       <button mat-button routerLink = "/messagelist" class="nav-link" ><h2>MessageList</h2></button>
-    </mat-toolbar-row>
-      <mat-toolbar-row>
+
+
       <button mat-button routerLink = "/create" class="nav-link" *ngIf = "userIsAuthenticated"><h2>Messenger</h2></button>
-    </mat-toolbar-row>
-      <mat-toolbar-row>
+
+
       <button mat-button routerLink = "/auth" class="nav-link "><h2>Authentication</h2></button>
-    </mat-toolbar-row>
-      <mat-toolbar-row>
+
       <button mat-button href="/shopping" class="nav-link" *ngIf = "userIsAuthenticated "><h2>Shopping</h2></button>
-    </mat-toolbar-row>
-      <mat-toolbar-row>
+
       <button mat-button [routerLink] = "['/admin']" class="nav-link" *ngIf = "userIsAuthenticated && role=='Admin'"><h2>Product Administration</h2></button>
-    </mat-toolbar-row>
+
 
 </mat-toolbar-row>
 </mat-toolbar>
+
+
+
+  <mat-sidenav class="app-sidenav mat-elevation-z10"
+
+   #sidenav fixedInViewport="false">
+   <mat-toolbar color="accent">Dashboard</mat-toolbar>
+   <mat-list>
+     <mat-list-item ><a>Food</a></mat-list-item>
+     <mat-list-item><a>Drinks</a></mat-list-item>
+     <mat-list-item><a href="/aboutus">AboutUs</a></mat-list-item>
+   </mat-list>
+  </mat-sidenav>
+  <div class="app-sidenav-content">
+
+     <div class="wrapper">
+       <router-outlet></router-outlet>
+     </div>
+  </div>
+</mat-sidenav-container>
