@@ -1,9 +1,21 @@
-﻿<div class="well ">
 
-      <app-app-header [appheader]="appheader"></app-app-header>
+<!--<mat-sidenav-container class="app-sidenav-container">
+  <mat-sidenav class="app-sidenav" #sidenav>
+          <mat-list>
+     <mat-list-item>Food</mat-list-item>
+     <mat-list-item>Drinks</mat-list-item>
+     <mat-list-item>About Us</mat-list-item>
+   </mat-list>
+  </mat-sidenav>-->
+
+    <div class="container-body">
+
+      <app-header></app-header>
 
       <router-outlet></router-outlet>
 
-      <app-app-footer appfooter="appfooter"></app-app-footer>
+      <app-app-footer ></app-app-footer>
+    </div>
 
-</div>
+
+  <!--</mat-sidenav-container>-->
