@@ -55,7 +55,7 @@ export class AuthService {
 
     signup(email: string, password: string){
       const authData: AuthData = { email: email, password: password};
-         return this.http.post('https://benfood.herokuapp.com/api/user/signup', authData)
+         return this.http.post('/api/user/signup', authData)
             .subscribe(() => {
         this.router.navigate(["/"]);
       }, error => {
@@ -66,7 +66,7 @@ export class AuthService {
 
     signin(email : string, password : string) {
       const authData: AuthData = {email: email, password: password}
-      return this.http.post<{ role : string, token : string, userId: string}>('https://benfood.herokuapp.com/api/user/signin', authData)
+      return this.http.post<{ role : string, token : string, userId: string}>('/api/user/signin', authData)
           .subscribe(response => {
             const token = response.token;
             //const role = response.role;

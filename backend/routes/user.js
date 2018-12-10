@@ -116,7 +116,8 @@ router.post('/signin', (req, res, next) => {
 
     res.status(200).json({
       token : token,
-      userId: fetchedUser._id
+      userId: fetchedUser._id,
+      role: fetchedUser.role
     });
   }).catch(err => {
     return res.status(401).json({

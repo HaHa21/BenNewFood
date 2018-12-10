@@ -10,5 +10,5 @@ import { AppHeader } from './Components/app-header/app-header.model';
 })
 
 export class AppComponent {
-  appheader : AppHeader = new AppHeader ("Ben Fast Food", "Food", "Drinks", "AboutUs");
+  
 }
