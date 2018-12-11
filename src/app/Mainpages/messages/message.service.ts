@@ -20,7 +20,7 @@ export class MessageService {
      const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
      this.http
        .get<{ message: string; posts: any; maxPosts: number }>(
-         "https://benfood.herokuapp.com/api/messages" + queryParams
+         "/api/messages" + queryParams
        )
        .pipe(
          map(postData => {
@@ -62,7 +62,7 @@ export class MessageService {
       };
 
       this.http
-      .put("https://benfood.herokuapp.com/api/messages/" + id, messageData)
+      .put("/api/messages/" + id, messageData)
       .subscribe(response => {
         this.router.navigate(["/"]);
       });
@@ -79,13 +79,13 @@ export class MessageService {
          title: string;
          content: string;
          creator: string;
-       }>("https://benfood.herokuapp.com/api/messages/" + id);
+       }>("/api/messages/" + id);
      }
 
    addMessage(content : string, title: string, creator: string){
        const message: Message = {id: null, title: title, content: content, creator: creator};
        this.http.post<{ message: string; postId: string} >(
-         "https://benfood.herokuapp.com/api/messages" , message
+         "/api/messages" , message
        ).subscribe(responseData => {
          this.router.navigate(["/"]);
        })
@@ -93,7 +93,7 @@ export class MessageService {
    }
 
    deleteMessage(postId: string) {
-       return this.http.delete("https://benfood.herokuapp.com/api/messages/" + postId);
+       return this.http.delete("/api/messages/" + postId);
      }
 
 
