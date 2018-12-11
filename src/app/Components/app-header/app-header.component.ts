@@ -11,6 +11,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy{
     role;
 
    private authListenerSubs : Subscription;
+   
    userIsAuthenticated = false;
 
 @Output() toggleSidenav = new EventEmitter<void>();
@@ -19,11 +20,13 @@ export class AppHeaderComponent implements OnInit, OnDestroy{
    }
 
    ngOnInit(){
-      this.role = localStorage.getItem('role');
+      this.role = this.authService.getRole();
       this.userIsAuthenticated = this.authService.getisAuth();
+
       this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated =>  {
         this.userIsAuthenticated = isAuthenticated;
       });
+
    }
 
    onLogout() {
