@@ -8,11 +8,13 @@ import { AuthService } from '../../Mainpages/auth/auth.service';
   styleUrls: ['./app-header.component.css']
 })
 export class AppHeaderComponent implements OnInit, OnDestroy{
-    role;
+
 
    private authListenerSubs : Subscription;
-   
+   private adminListenerSubs : Subscription;
+   isAdmin = false;
    userIsAuthenticated = false;
+
 
 @Output() toggleSidenav = new EventEmitter<void>();
    constructor(private authService: AuthService) {
@@ -20,12 +22,22 @@ export class AppHeaderComponent implements OnInit, OnDestroy{
    }
 
    ngOnInit(){
-      this.role = this.authService.getRole();
+      this.isAdmin = this.authService.getAdminRole();
       this.userIsAuthenticated = this.authService.getisAuth();
 
       this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated =>  {
         this.userIsAuthenticated = isAuthenticated;
+      
       });
+
+      this.adminListenerSubs = this.authService.getAdminStatusListener().subscribe(isAdmin => {
+        this.isAdmin = isAdmin;
+
+      });
+
+
+
+
 
    }
 
@@ -35,5 +47,6 @@ export class AppHeaderComponent implements OnInit, OnDestroy{
 
    ngOnDestroy(){
      this.authListenerSubs.unsubscribe();
+     this.adminListenerSubs.unsubscribe();
    }
 }

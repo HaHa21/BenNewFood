@@ -15,10 +15,10 @@ export class AuthService {
     private isAuthenticated = false;
     private token : string;
     private role : string;
+    private isAdmin = false;
     private userId: string;
     private authStatusListener = new Subject<boolean>();
-    private userStatusListener = new Subject<boolean>();
-
+    private adminStatusListener = new Subject<boolean>();
     private helper = new JwtHelperService();
 
     constructor(private http: HttpClient, private router : Router) {
@@ -45,13 +45,18 @@ export class AuthService {
       return this.role;
     }
 
+    getAdminRole(){
+      return this.isAdmin;
+    }
+
     getAuthStatusListener(){
       return this.authStatusListener.asObservable();
     }
 
-    /*getUserStatusListener(){
-      return this.userStatusListener.asObservable();
-    }*/
+    getAdminStatusListener(){
+      return this.adminStatusListener.asObservable();
+    }
+
 
     signup(email: string, password: string){
       const authData: AuthData = { email: email, password: password};
@@ -76,17 +81,25 @@ export class AuthService {
 
             if(token){
               this.isAuthenticated = true;
+              this.isAdmin = true;
               this.userId = response.userId;
               console.log(response);
 
               this.authStatusListener.next(true);
+
+
     const decodedToken = this.helper.decodeToken(token);
               localStorage.setItem('role', decodedToken['role']);
               localStorage.setItem('token', response['token']);
               localStorage.setItem("userId", this.userId);
 
               this.role = localStorage.getItem('role');
-              console.log(this.role);
+              if(this.role == "User"){
+                this.adminStatusListener.next(false);
+              } else {
+                  this.adminStatusListener.next(true);
+              }
+        
               this.router.navigate(['/']);
             }
           }, error => {});

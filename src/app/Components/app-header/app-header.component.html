@@ -27,7 +27,7 @@
 
       <button mat-button href="/shopping" class="nav-link" *ngIf = "userIsAuthenticated "><h2>Shopping</h2></button>
 
-      <button mat-button [routerLink] = "['/admin']" class="nav-link" *ngIf = "userIsAuthenticated && role=='Admin'"><h2>Product Administration</h2></button>
+      <button mat-button [routerLink] = "['/admin']" class="nav-link" *ngIf = "userIsAuthenticated && isAdmin"><h2>Product Administration</h2></button>
 
 
 </mat-toolbar-row>
