@@ -1,6 +1,6 @@
 {
 	"/api": {
-		"target": "https://benfood.herokuapp.com",
+		"target": "http://localhost:5000",
 		"changeOrigin": true,
 		"secure": false
 	}

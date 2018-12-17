@@ -14,6 +14,7 @@ import { ErrorService } from "../../Components/errors/error.service";
 export class AuthService {
     private isAuthenticated = false;
     private token : string;
+    private tokenTimer: any;
     private role : string;
     private isAdmin = false;
     private userId: string;
@@ -71,15 +72,18 @@ export class AuthService {
 
     signin(email : string, password : string) {
       const authData: AuthData = {email: email, password: password}
-      return this.http.post<{ role : string, token : string, userId: string}>('/api/user/signin', authData)
+      return this.http.post<{ role : string, token : string, expiresIn: number,  userId: string}>('/api/user/signin', authData)
           .subscribe(response => {
             const token = response.token;
             //const role = response.role;
 
             this.token = token;
 
-
+               console.log(response.expiresIn);
             if(token){
+
+
+
               this.isAuthenticated = true;
               this.isAdmin = true;
               this.userId = response.userId;
@@ -87,11 +91,9 @@ export class AuthService {
 
               this.authStatusListener.next(true);
 
-
-    const decodedToken = this.helper.decodeToken(token);
+           const decodedToken = this.helper.decodeToken(token);
               localStorage.setItem('role', decodedToken['role']);
-              localStorage.setItem('token', response['token']);
-              localStorage.setItem("userId", this.userId);
+
 
               this.role = localStorage.getItem('role');
               if(this.role == "User"){
@@ -99,7 +101,9 @@ export class AuthService {
               } else {
                   this.adminStatusListener.next(true);
               }
-        
+                console.log(decodedToken.exp);
+              this.setAuthTimer(decodedToken.exp);
+              this.saveAuthData(token, decodedToken.exp, this.userId);
               this.router.navigate(['/']);
             }
           }, error => {});
@@ -111,11 +115,62 @@ export class AuthService {
       );
     }*/
 
+      private setAuthTimer(duration: number) {
+        console.log("Setting timer: " + duration);
+        this.tokenTimer = setTimeout(() => {
+          this.logout();
+        }, duration * 1000);
+      }
+
+      autoAuthUser() {
+          const authInformation = this.getAuthData();
+          if (!authInformation) {
+            return;
+          }
+          const now = new Date();
+          const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+          if (expiresIn > 0) {
+            this.token = authInformation.token;
+            this.isAuthenticated = true;
+            this.userId = authInformation.userId;
+            this.setAuthTimer(expiresIn / 1000);
+            this.authStatusListener.next(true);
+          }
+      }
+
     logout() {
        this.token = null;
        this.isAuthenticated = false;
        this.authStatusListener.next(false);
+       clearTimeout(this.tokenTimer);
+          this.clearAuthData();
        this.router.navigate(['/']);
     }
 
+    private saveAuthData(token: string, expirationDate: string, userId: string){
+      localStorage.setItem("token", token);
+      localStorage.setItem("expiration", new Date(expirationDate).toISOString());
+      localStorage.setItem("userId", userId);
+    }
+
+    private getAuthData() {
+      const token = localStorage.getItem("token");
+      const expirationDate = localStorage.getItem("expiration");
+      const userId = localStorage.getItem("userId");
+      if (!token || !expirationDate) {
+        return;
+      }
+      return {
+        token: token,
+        expirationDate: new Date(expirationDate),
+        userId: userId
+      }
+    }
+
+    private clearAuthData() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("expiration");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("role");
+      }
 }

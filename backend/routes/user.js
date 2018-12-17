@@ -101,6 +101,7 @@ router.post('/signin', (req, res, next) => {
     if(!user){
       return res.status(401).json({
         message: "Auth failed!!"
+
       });
     }
     fetchedUser = user;
@@ -112,10 +113,12 @@ router.post('/signin', (req, res, next) => {
       });
     }
     const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id},
-    "Secret_be_longer");
+    "Secret_be_longer", { expiresIn: "1h" });
+
 
     res.status(200).json({
       token : token,
+      expiresIn: 3600,
       userId: fetchedUser._id,
       role: fetchedUser.role
     });
