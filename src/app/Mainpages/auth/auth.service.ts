@@ -92,14 +92,14 @@ export class AuthService {
               this.authStatusListener.next(true);
 
            const decodedToken = this.helper.decodeToken(token);
-              localStorage.setItem('role', decodedToken['role']);
+              localStorage.setItem('role', response['role']);
 
 
               this.role = localStorage.getItem('role');
-              if(this.role == "User"){
-                this.adminStatusListener.next(false);
+              if(this.role == "Admin"){
+                this.adminStatusListener.next(true);
               } else {
-                  this.adminStatusListener.next(true);
+                  this.adminStatusListener.next(false);
               }
                 console.log(decodedToken.exp);
               this.setAuthTimer(decodedToken.exp);
@@ -119,7 +119,7 @@ export class AuthService {
         console.log("Setting timer: " + duration);
         this.tokenTimer = setTimeout(() => {
           this.logout();
-        }, duration * 1000);
+        }, duration);
       }
 
       autoAuthUser() {
@@ -147,16 +147,18 @@ export class AuthService {
        this.router.navigate(['/']);
     }
 
-    private saveAuthData(token: string, expirationDate: string, userId: string){
+    private saveAuthData(token: string, expirationDate: string, userId: string, role: string){
       localStorage.setItem("token", token);
       localStorage.setItem("expiration", new Date(expirationDate).toISOString());
       localStorage.setItem("userId", userId);
+
     }
 
     private getAuthData() {
       const token = localStorage.getItem("token");
       const expirationDate = localStorage.getItem("expiration");
       const userId = localStorage.getItem("userId");
+
       if (!token || !expirationDate) {
         return;
       }
@@ -164,6 +166,7 @@ export class AuthService {
         token: token,
         expirationDate: new Date(expirationDate),
         userId: userId
+
       }
     }
 
