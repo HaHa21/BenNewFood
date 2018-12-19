@@ -5,11 +5,11 @@ var mongoose = require('mongoose');
 
 const CheckAuth = require("../middleware/CheckAuth");
 var User = require('../models/user');
-var Message = require('../models/message');
+var Reviews = require('../models/reviews');
 
 router.post("", CheckAuth, (req, res, next) => {
 
-  const message = new Message({
+  const message = new Review({
     title: req.body.title,
     content: req.body.content,
     creator: req.userData.userId
@@ -33,7 +33,7 @@ router.post("", CheckAuth, (req, res, next) => {
 router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const postQuery = Message.find();
+  const postQuery = Reviews.find();
   let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -41,7 +41,7 @@ router.get("", (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-      return Message.count();
+      return Reviews.count();
     })
     .then(count => {
       res.status(200).json({
@@ -58,7 +58,7 @@ router.get("", (req, res, next) => {
 });
 
 router.get("/:id", (req, res, next) => {
-  Message.findById(req.params.id)
+  Reviews.findById(req.params.id)
     .then(post => {
       if (post) {
         res.status(200).json(post);
@@ -74,7 +74,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.delete("/:id", CheckAuth, (req, res, next) => {
-  Message.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+  Reviews.deleteOne({ _id: req.params.id, creator: req.userData.userId })
     .then(result => {
       console.log(result);
       if (result.n > 0) {
@@ -93,14 +93,14 @@ router.delete("/:id", CheckAuth, (req, res, next) => {
 router.put(
   "/:id",
   CheckAuth, (req, res, next) => {
-    const message = new MessageContent({
+    const message = new Review({
       _id : req.body.id,
         title: req.body.title,
       content : req.body.content,
       creator: req.userData.userId
     });
 
-    MessageContent.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+    Reviews.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then(result => {
       if (result.nModified > 0) {
         res.status(200).json({ message: "Update successful!" });
