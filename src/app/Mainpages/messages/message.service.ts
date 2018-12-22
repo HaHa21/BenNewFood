@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable, EventEmitter } from "@angular/core";
 import { Subject } from "rxjs";
 import { Router } from '@angular/router';
@@ -9,11 +9,14 @@ import { ErrorService } from "../../Components/errors/error.service";
 @Injectable()
 export class MessageService {
 
+private headers: HttpHeaders;
+
   private posts: Message[] = [];
   private postsUpdated = new Subject<{ posts: Message[]; postCount: number }>();
 
    constructor(private http: HttpClient, private router : Router){
-
+     const token = localStorage.getItem("token") || '';
+          this.headers = new HttpHeaders().set("Authorization", token);
    }
 
    getMessages(postsPerPage: number, currentPage: number) {
