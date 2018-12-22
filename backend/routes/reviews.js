@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 const CheckAuth = require("../middleware/CheckAuth");
 var User = require('../models/user');
-var Reviews = require('../models/reviews');
+var Review = require('../models/reviews');
 
 router.post("", CheckAuth, (req, res, next) => {
 
@@ -33,7 +33,7 @@ router.post("", CheckAuth, (req, res, next) => {
 router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const postQuery = Reviews.find();
+  const postQuery = Review.find();
   let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -41,7 +41,7 @@ router.get("", (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-      return Reviews.count();
+      return Review.count();
     })
     .then(count => {
       res.status(200).json({
@@ -57,8 +57,8 @@ router.get("", (req, res, next) => {
     });
 });
 
-router.get("/:id", (req, res, next) => {
-  Reviews.findById(req.params.id)
+router.get("/:id", CheckAuth, (req, res, next) => {
+  Review.findById(req.params.id)
     .then(post => {
       if (post) {
         res.status(200).json(post);
@@ -74,7 +74,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.delete("/:id", CheckAuth, (req, res, next) => {
-  Reviews.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+  Review.deleteOne({ _id: req.params.id, creator: req.userData.userId })
     .then(result => {
       console.log(result);
       if (result.n > 0) {
@@ -91,8 +91,8 @@ router.delete("/:id", CheckAuth, (req, res, next) => {
 });
 
 router.put(
-  "/:id",
-  CheckAuth, (req, res, next) => {
+  "/:id", CheckAuth,
+  (req, res, next) => {
     const message = new Review({
       _id : req.body.id,
         title: req.body.title,
@@ -100,7 +100,7 @@ router.put(
       creator: req.userData.userId
     });
 
-    Reviews.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+    Review.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then(result => {
       if (result.nModified > 0) {
         res.status(200).json({ message: "Update successful!" });

@@ -23,7 +23,8 @@ export class AuthService {
     private helper = new JwtHelperService();
 
     constructor(private http: HttpClient, private router : Router) {
-
+       this.token = localStorage.getItem('token') || '';
+       this.isAuthenticated = this.token ? true : false;
     }
 
     getToken(){
@@ -147,7 +148,7 @@ export class AuthService {
        this.router.navigate(['/']);
     }
 
-    private saveAuthData(token: string, expirationDate: string, userId: string, role: string){
+    private saveAuthData(token: string, expirationDate: string, userId: string){
       localStorage.setItem("token", token);
       localStorage.setItem("expiration", new Date(expirationDate).toISOString());
       localStorage.setItem("userId", userId);

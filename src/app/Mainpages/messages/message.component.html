@@ -7,7 +7,7 @@
        <tr >
          <td>
     <mat-form-field class="table-full-width" >
-      
+
         <input matInput type="text" formControlName="title" placeholder="Message Title" >
         <mat-error *ngIf="form.get('title').invalid">Please enter a message title.</mat-error>
     </mat-form-field>
@@ -26,9 +26,10 @@
   </tr>
 
     </table>
+    <button mat-raised-button color="accent" type="submit">Save Post</button>
 </form>
 </mat-card-content>
 <mat-card-actions>
-<button mat-raised-button color="accent" type="submit">Save Post</button>
+
 </mat-card-actions>
 </mat-card>
