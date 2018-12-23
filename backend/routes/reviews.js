@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 
 const CheckAuth = require("../middleware/CheckAuth");
+const CheckAdmin = require("../middleware/CheckAdmin");
 var User = require('../models/user');
 var Review = require('../models/reviews');
 
@@ -73,8 +74,8 @@ router.get("/:id", CheckAuth, (req, res, next) => {
     });
 });
 
-router.delete("/:id", CheckAuth, (req, res, next) => {
-  Review.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+router.delete("/:id", CheckAuth , (req, res, next) => {
+  Review.deleteOne({ _id: req.params.id })
     .then(result => {
       console.log(result);
       if (result.n > 0) {
