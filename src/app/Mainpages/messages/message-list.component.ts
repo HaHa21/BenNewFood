@@ -20,7 +20,7 @@ import { AuthService } from "../auth/auth.service";
     </mat-expansion-panel-header>
 
   <mat-action-row>
-  <a mat-button *ngIf="role === 'Admin' ">Delete By Admin</a>
+  <a mat-button (click)="onDelete(post.id)" *ngIf="role === 'Admin' ">Delete By Admin</a>
   </mat-action-row>
   <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator ">
     <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>

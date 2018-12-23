@@ -4,12 +4,13 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 
 const CheckAuth = require("../middleware/CheckAuth");
+const CheckAdmin = require("../middleware/CheckAdmin");
 var User = require('../models/user');
-var Message = require('../models/message');
+var Review = require('../models/reviews');
 
 router.post("", CheckAuth, (req, res, next) => {
 
-  const message = new Message({
+  const message = new Review({
     title: req.body.title,
     content: req.body.content,
     creator: req.userData.userId
@@ -33,7 +34,7 @@ router.post("", CheckAuth, (req, res, next) => {
 router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const postQuery = Message.find();
+  const postQuery = Review.find();
   let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -41,7 +42,7 @@ router.get("", (req, res, next) => {
   postQuery
     .then(documents => {
       fetchedPosts = documents;
-      return Message.count();
+      return Review.count();
     })
     .then(count => {
       res.status(200).json({
@@ -57,8 +58,8 @@ router.get("", (req, res, next) => {
     });
 });
 
-router.get("/:id", (req, res, next) => {
-  Message.findById(req.params.id)
+router.get("/:id", CheckAuth, (req, res, next) => {
+  Review.findById(req.params.id)
     .then(post => {
       if (post) {
         res.status(200).json(post);
@@ -73,8 +74,8 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.delete("/:id", CheckAuth, (req, res, next) => {
-  Message.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+router.delete("/:id", CheckAuth , (req, res, next) => {
+  Review.deleteOne({ _id: req.params.id })
     .then(result => {
       console.log(result);
       if (result.n > 0) {
@@ -91,16 +92,16 @@ router.delete("/:id", CheckAuth, (req, res, next) => {
 });
 
 router.put(
-  "/:id",
-  CheckAuth, (req, res, next) => {
-    const message = new MessageContent({
+  "/:id", CheckAuth,
+  (req, res, next) => {
+    const message = new Review({
       _id : req.body.id,
         title: req.body.title,
       content : req.body.content,
       creator: req.userData.userId
     });
 
-    MessageContent.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+    Review.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then(result => {
       if (result.nModified > 0) {
         res.status(200).json({ message: "Update successful!" });
