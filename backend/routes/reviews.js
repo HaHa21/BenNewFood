@@ -75,7 +75,7 @@ router.get("/:id", CheckAuth, (req, res, next) => {
 });
 
 router.delete("/:id", CheckAuth , (req, res, next) => {
-  Review.deleteOne({ _id: req.params.id })
+  Review.deleteOne({ _id: req.params.id, creator: req.userData.userId })
     .then(result => {
       console.log(result);
       if (result.n > 0) {
