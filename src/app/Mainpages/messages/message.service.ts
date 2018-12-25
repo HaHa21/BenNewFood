@@ -99,5 +99,7 @@ private headers: HttpHeaders;
        return this.http.delete("/api/messages/" + postId);
      }
 
-
+   deleteMessageAdmin(postId: string) {
+     return this.http.delete("/api/messages/admin-delete/" + postId);
+   }
 }
