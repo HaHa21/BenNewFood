@@ -5,6 +5,7 @@ import { AuthenticationComponent } from "./authentication.component";
 import { SignupComponent } from "./signup.component";
 import { SigninComponent } from "./signin.component";
 import { LogoutComponent } from "./logout.component";
+import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 
 
 const AUTH_ROUTES: Routes = [
@@ -12,7 +13,8 @@ const AUTH_ROUTES: Routes = [
       { path: '', component: AuthenticationComponent , children: [
         { path: 'signup', component: SignupComponent },
         { path: 'signin', component: SigninComponent },
-        { path: 'logout', component: LogoutComponent }
+        { path: 'logout', component: LogoutComponent },
+        { path: 'signin/forgot-password', component: ForgotPasswordComponent }
   ] },
 ];
 

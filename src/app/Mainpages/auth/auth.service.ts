@@ -171,6 +171,10 @@ export class AuthService {
       }
     }
 
+    forgotPassword(data: {email: string}) : Observable<{message : string}> {
+      return this.http.post<{message : string}>('api/user/forgotpassword', data);
+    }
+
     private clearAuthData() {
         localStorage.removeItem("token");
         localStorage.removeItem("expiration");
