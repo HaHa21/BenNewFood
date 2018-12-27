@@ -20,7 +20,7 @@ import { AuthService } from "../auth/auth.service";
     </mat-expansion-panel-header>
 
   <mat-action-row>
-  <a mat-button (click)="onDelete(post.id)" *ngIf="role === 'Admin' ">Delete By Admin</a>
+  <a mat-button (click)="onDeleteAdmin(post.id)" *ngIf="role === 'Admin' ">Delete By Admin</a>
   </mat-action-row>
   <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator ">
     <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
@@ -83,6 +83,15 @@ export class MessageListComponent implements OnInit, OnDestroy{
 onDelete(postId: string) {
   this.isLoading = true;
   this.messageService.deleteMessage(postId).subscribe(() => {
+    this.messageService.getMessages(this.postsPerPage, this.currentPage);
+  }, () => {
+    this.isLoading = false;
+  });
+}
+
+onDeleteAdmin(postId: string) {
+  this.isLoading = true;
+  this.messageService.deleteMessageAdmin(postId).subscribe(() => {
     this.messageService.getMessages(this.postsPerPage, this.currentPage);
   }, () => {
     this.isLoading = false;

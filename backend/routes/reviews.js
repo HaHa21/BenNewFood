@@ -75,6 +75,23 @@ router.get("/:id", CheckAuth, (req, res, next) => {
 });
 
 router.delete("/:id", CheckAuth , (req, res, next) => {
+  Review.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+    .then(result => {
+      console.log(result);
+      if (result.n > 0) {
+        res.status(200).json({ message: "Deletion successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Deleting posts failed!"
+      });
+    });
+});
+
+router.delete("/admin-delete/:id", CheckAuth , (req, res, next) => {
   Review.deleteOne({ _id: req.params.id })
     .then(result => {
       console.log(result);
