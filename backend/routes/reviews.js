@@ -4,7 +4,6 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 
 const CheckAuth = require("../middleware/CheckAuth");
-const CheckAdmin = require("../middleware/CheckAdmin");
 var User = require('../models/user');
 var Review = require('../models/reviews');
 
