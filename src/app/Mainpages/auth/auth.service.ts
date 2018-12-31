@@ -1,6 +1,6 @@
 ﻿import { Injectable } from "@angular/core";
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
@@ -80,11 +80,11 @@ export class AuthService {
 
             this.token = token;
 
-               console.log(response.expiresIn);
+
             if(token){
 
-
-
+              const expiresInDuration = response.expiresIn;
+                this.setAuthTimer(expiresInDuration);
               this.isAuthenticated = true;
               this.isAdmin = true;
               this.userId = response.userId;
@@ -102,9 +102,11 @@ export class AuthService {
               } else {
                   this.adminStatusListener.next(false);
               }
-                console.log(decodedToken.exp);
-              this.setAuthTimer(decodedToken.exp);
-              this.saveAuthData(token, decodedToken.exp, this.userId);
+
+
+              const now = new Date();
+              const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+              this.saveAuthData(token, expirationDate, this.userId);
               this.router.navigate(['/']);
             }
           }, error => {});
@@ -120,7 +122,7 @@ export class AuthService {
         console.log("Setting timer: " + duration);
         this.tokenTimer = setTimeout(() => {
           this.logout();
-        }, duration);
+        }, duration * 1000);
       }
 
       autoAuthUser() {
@@ -148,9 +150,9 @@ export class AuthService {
        this.router.navigate(['/']);
     }
 
-    private saveAuthData(token: string, expirationDate: string, userId: string){
+    private saveAuthData(token: string, expirationDate: Date, userId: string){
       localStorage.setItem("token", token);
-      localStorage.setItem("expiration", new Date(expirationDate).toISOString());
+      localStorage.setItem("expiration", expirationDate.toISOString());
       localStorage.setItem("userId", userId);
 
     }
@@ -174,6 +176,19 @@ export class AuthService {
     forgotPassword(data: {email: string}) : Observable<{message : string}> {
       return this.http.post<{message : string}>('api/user/forgotpassword', data);
     }
+
+    resetPassword(body) : Observable<{success : boolean}>{
+      const httpOptions = {
+     headers: new HttpHeaders({
+       'Content-Type' :'application/json',
+       'Authorization': `bearer ${body.token}`
+     })
+   }
+   return this.http.put<{success: boolean}>(`api/user/resetpassword`,
+   {password: body.password},
+   httpOptions)
+ }
+
 
     private clearAuthData() {
         localStorage.removeItem("token");

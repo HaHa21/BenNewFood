@@ -149,11 +149,13 @@ router.post('/forgotpassword', async (req, res) => {
     }
   });
 
+  const resetLink = `<h2>Please Reset you password here</h2>
+  <a href="localhost:4200/reset-password/${token}">Reset password</a> `// html body
+
   let mailOptions = {
         from: 'domlee2012@gmail.com', // sender address
         to: req.body.email,
-        html: `<h2>Please Reset you password here</h2>
-        <a href="localhost:4200/reset-password/${token}">Reset password</a> `// html body
+        html: resetLink
     };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -167,4 +169,27 @@ router.post('/forgotpassword', async (req, res) => {
   });
 });
 
+router.post('resetpassword', async(req, res) => {
+  try {
+			const { password } = req.body;
+			if (!password) {
+				return res.status(401).json({ err: 'password is required' });
+			}
+
+      let user = await User.findOne({ email : req.body.email});
+
+			const sanitizedUser = userService.getUser(user);
+			if (!user.local.email) {
+				user.local.email = sanitizedUser.email;
+				user.local.name = sanitizedUser.name;
+			}
+			const hash = await getEncryptedPassword(password);
+			user.local.password = hash;
+			await user.save();
+			return res.json({ success: true });
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json(err);
+		}
+});
 module.exports = router;
