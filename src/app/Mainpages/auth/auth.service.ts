@@ -84,7 +84,7 @@ export class AuthService {
             if(token){
 
               const expiresInDuration = response.expiresIn;
-                this.setAuthTimer(expiresInDuration);
+              this.setAuthTimer(expiresInDuration);
               this.isAuthenticated = true;
               this.isAdmin = true;
               this.userId = response.userId;
@@ -105,7 +105,15 @@ export class AuthService {
 
 
               const now = new Date();
-              const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+
+              var expirationDate = new Date(now.getTime() + now.getTimezoneOffset() * 60 * 1000);
+
+              var offset = (now.getTimezoneOffset() / 60);
+
+              var hours = now.getHours();
+
+              expirationDate.setHours((hours - offset) + 1);
+
               this.saveAuthData(token, expirationDate, this.userId);
               this.router.navigate(['/']);
             }
