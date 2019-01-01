@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
+import  * as moment from 'moment-timezone';
 import { Observable } from "rxjs";
 import { Subject } from "rxjs";
 import { AuthData } from "./auth-data.model";
@@ -104,15 +105,10 @@ export class AuthService {
               }
 
 
-              const now = new Date();
 
-              var expirationDate = new Date(now.getTime() + now.getTimezoneOffset() * 60 * 1000);
+              var currentDate = moment();
+              const expirationDate = currentDate.tz('UTC').add(1, 'hours').format("YYYY Do MM T HH mm ss");
 
-              var offset = (now.getTimezoneOffset() / 60);
-
-              var hours = now.getHours();
-
-              expirationDate.setHours((hours - offset) + 1);
 
               this.saveAuthData(token, expirationDate, this.userId);
               this.router.navigate(['/']);
@@ -158,9 +154,9 @@ export class AuthService {
        this.router.navigate(['/']);
     }
 
-    private saveAuthData(token: string, expirationDate: Date, userId: string){
+    private saveAuthData(token: string, expirationDate: string, userId: string){
       localStorage.setItem("token", token);
-      localStorage.setItem("expiration", expirationDate.toISOString());
+      localStorage.setItem("expiration", expirationDate);
       localStorage.setItem("userId", userId);
 
     }
