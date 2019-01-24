@@ -140,17 +140,15 @@ router.post('/forgotpassword', async (req, res) => {
   const token = jwt.sign({ id : user._id}, "Secret_be_longer");
 
   let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    service: 'gmail',
     auth: {
-      user: 'domlee2012@gmail.com',
+      user: 'ldominic063@gmail.com',
       pass: 'Camry4560'
     }
   });
 
   const resetLink = `<h2>Please Reset you password here</h2>
-  <a href="localhost:4200/reset-password/${token}">Reset password</a> `// html body
+  <a href='http://localhost:4200/auth/reset-password/${token}'>Reset password</a> `// html body
 
   let mailOptions = {
         from: 'domlee2012@gmail.com', // sender address
@@ -169,22 +167,18 @@ router.post('/forgotpassword', async (req, res) => {
   });
 });
 
-router.post('resetpassword', async(req, res) => {
+router.put('reset-password', async(req, res) => {
   try {
 			const { password } = req.body;
 			if (!password) {
 				return res.status(401).json({ err: 'password is required' });
 			}
 
-      let user = await User.findOne({ email : req.body.email});
+      // const user = await User.findOne({ email : req.body.email});
 
-			const sanitizedUser = userService.getUser(user);
-			if (!user.local.email) {
-				user.local.email = sanitizedUser.email;
-				user.local.name = sanitizedUser.name;
-			}
-			const hash = await getEncryptedPassword(password);
-			user.local.password = hash;
+
+			//const hash = await getEncryptedPassword(password);
+			//user.local.password = hash;
 			await user.save();
 			return res.json({ success: true });
 		} catch (err) {
