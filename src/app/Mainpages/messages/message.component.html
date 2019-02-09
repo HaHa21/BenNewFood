@@ -8,8 +8,8 @@
          <td>
     <mat-form-field class="table-full-width" >
 
-        <input matInput type="text" formControlName="title" placeholder="Message Title" >
-        <mat-error *ngIf="form.get('title').invalid">Please enter a message title.</mat-error>
+        <input matInput type="text" formControlName="title" placeholder="Review Title" >
+        <mat-error *ngIf="form.get('title').invalid">Please enter a review title.</mat-error>
     </mat-form-field>
   </td>
   </tr>
@@ -19,12 +19,13 @@
            <td>
                <mat-form-field class="table-full-width" >
 
-    <textarea matInput rows="4" formControlName="content" placeholder="Message Content" class="inputtitle"></textarea>
-    <mat-error *ngIf="form.get('content').invalid">Please enter a message content.</mat-error>
+    <textarea matInput rows="4" formControlName="content" placeholder="Review Content" class="inputtitle"></textarea>
+    <mat-error *ngIf="form.get('content').invalid">Please enter a review content.</mat-error>
   </mat-form-field>
   </td>
   </tr>
 
+   <star-rating [starType]="'svg'" [numOfStars]="5" [rating]="2.8"></star-rating>
     </table>
     <button mat-raised-button color="accent" type="submit">Save Post</button>
 </form>

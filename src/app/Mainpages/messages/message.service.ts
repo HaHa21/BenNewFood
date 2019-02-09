@@ -6,7 +6,7 @@ import { map } from "rxjs/operators";
 import { Message } from "./message.model";
 import { ErrorService } from "../../Components/errors/error.service";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class MessageService {
 
 private headers: HttpHeaders;
